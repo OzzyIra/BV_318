@@ -73,6 +73,8 @@ void main()
 	}
 	//2) Удаляем массив указателей:
 	delete[] arr;
+
+	//Test commit
 #endif // DYNAMIC_MEMORY_2
 
 }
