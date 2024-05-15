@@ -28,8 +28,6 @@ int* pop_front(int arr[], int& n);
 int* insert(int arr[], int& n, int value, int i_value);
 int* erase(int arr[], int& n, int pos);
 
-//void insert(int arr[], int& n, int value, int i_value);	
-
 
 
 //Stack - это модель памяти, из которой последний записанный элемент считывается первым.
@@ -76,7 +74,7 @@ void main()
 	cout << "Введите положение удаляемого значения: "; cin >> e_pos;
 	cout << "\n";
 	arr = erase(arr, n, e_pos);
-	Print(arr, n);
+	Print(arr, n - 1);
 
 	//delete[] buffer;
 	delete[] arr;
@@ -285,23 +283,19 @@ int* insert(int arr[], int& n, int value, int i_value)	//вставляет зн
 	
 }
 
-//void insert(int arr[], int& n, int value, int i_value)	//вставляет значение в массив по указанному индексу
-//{
-//	//int* buffer = new int[n + 1];
-//	int* buffer = new int;
-//	for (int i = n; i >= i_value; i--)arr[i] = arr[i - 1];
-//	delete[] arr[i_value];
-//	buffer[i_value] = value;
-//}
 
 int* erase(int arr[], int& n, int pos)
 {
-
-	int* buffer = new int[n + 1];
-	for (int i = 0; i < n; i++)buffer[i] = arr[i];
-
-	for (int i = pos; i < n - 1; i++) buffer[i] = arr[i + 1];
-	
+	if (pos >= n)return arr;
+	int* buffer = new int[n - 1];
+	//for (int i = 0; i < pos; i++)buffer[i] = arr[i];
+	//for (int i = pos; i < n - 1; i++) buffer[i] = arr[i + 1];
+	for (int i = 0; i < n - 1; i++)
+		buffer[i] = arr[i < pos ? i : i + 1];
+	{
+		//if (i < pos)buffer[i] = arr[i];
+		//else buffer[i] = arr[i + 1];
+	}
 	delete[] arr;
 	return buffer;
 	
