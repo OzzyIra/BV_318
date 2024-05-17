@@ -9,17 +9,20 @@ using std::endl;
 //функции для двухмерных массивов
 template<typename T>T** Allocate(const int rows, const int cols);
 void Clear(int** arr, const int rows);
+template<typename T>void Clear(T** arr, const int rows);
 
 template<typename T>T** push_row_back(T** arr, int& rows, const int cols);
 template<typename T>T** pop_row_back(T** arr, int& rows, const int cols);
-template<typename T>
-void push_col_back(T** arr, const int rows, int& cols);
+template<typename T>void push_col_back(T** arr, const int rows, int& cols);
 
 
 void FillRand(int arr[], const int n, int minRand, int maxRand);
 void FillRand(double arr[], const int n, int minRand, int maxRand);
 void FillRand(char arr[], const int n);
+
 void FillRand(int** arr, const int rows, const int cols);
+void FillRand(double** arr, const int rows, const int cols);
+
 template<typename T>void Print(T arr[], const int n);
 template<typename T>void Print(T** arr, const int rows, const int cols);
 
@@ -30,9 +33,6 @@ template<typename T>T* pop_back(T arr[], int& n);
 template<typename T>T* pop_front(T arr[], int& n);
 template<typename T>T* insert(T arr[], int& n, T value, int index);
 template<typename T>T* erase(T arr[], int& n, int pos);
-
-
-
 //Stack - это модель памяти, из которой последний записанный элемент считывается первым.
 //push
 //pop
@@ -89,7 +89,7 @@ void main()
 	int cols;
 	cout << "Введите количество строк: "; cin >> rows;
 	cout << "Введите количество элементов строки: "; cin >> cols;
-	DataType** arr = Allocate<DataType>(rows, cols);
+	int** arr = Allocate<int>(rows, cols);
 	FillRand(arr, rows, cols);
 	Print(arr, rows, cols);
 
@@ -109,15 +109,14 @@ void main()
 
 }
 
-template<typename T>
-T** Allocate(const int rows, const int cols)
+template<typename T>T** Allocate(const int rows, const int cols)
 {
 	//1) Создаем массив указателей:
 	T** arr = new T* [rows];
 	//2) Выделяем память под строки:
 	for (int i = 0; i < rows; i++)
 	{
-		arr[i] = new int[cols] {};
+		arr[i] = new T[cols] {};
 	}
 	return arr;
 }
@@ -134,20 +133,23 @@ void Clear(int** arr, const int rows)
 
 
 }
-
 template<typename T>
-T** push_row_back(T** arr, int& rows, const int cols)
+void Clear(T** arr, const int rows)
 {
-	T** buffer = new T* [rows + 1];
-
-	for (int i = 0; i < rows; i++)buffer[i] = arr[i];
-
+	//1) Сначала удаляем строки:
+	for (int i = 0; i < rows; i++)
+	{
+		delete[] arr[i];
+	}
+	//2) Удаляем массив указателей:
 	delete[] arr;
 
-	buffer[rows] = new T[cols] {};
 
-	rows++;
-	return buffer;
+}
+
+template<typename T>T** push_row_back(T** arr, int& rows, const int cols)
+{
+	return push_back(arr, rows, new T[cols]{});
 }
 
 
@@ -185,6 +187,17 @@ void FillRand(char arr[], const int n)
 }
 
 void FillRand(int** arr, const int rows, const int cols)
+
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			arr[i][j] = rand() % 100;
+		}
+	}
+}
+void FillRand(double** arr, const int rows, const int cols)
 
 {
 	for (int i = 0; i < rows; i++)
@@ -266,12 +279,8 @@ T* pop_back(T arr[], int& n)
 template<typename T>
 T** pop_row_back(T** arr, int& rows, const int cols)
 {
-
-	T** buffer = new T* [--rows];
-	for (int i = 0; i < rows; i++)buffer[i] = arr[i];
-	delete[] arr[rows];
-	delete[] arr;
-	return buffer;
+	delete[] arr[rows - 1];
+	return pop_back(arr,rows);
 }
 template<typename T>
 void push_col_back(T** arr, const int rows, int& cols)
@@ -279,12 +288,8 @@ void push_col_back(T** arr, const int rows, int& cols)
 
 	for (int i = 0; i < rows; i++)
 	{
-
-		T* buffer = new T[cols + 1]{};
-		for (int j = 0; j < cols; j++)	buffer[j] = arr[i][j];
-
-		delete[] arr[i];
-		arr[i] = buffer;
+		arr[i] = push_back(arr[i], cols, T());
+		cols--;
 	}
 
 	cols++;
