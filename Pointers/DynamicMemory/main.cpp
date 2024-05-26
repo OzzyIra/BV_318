@@ -6,6 +6,7 @@ using std::cout;
 using std::endl;
 
 #define tab "\t"
+
 //функции для двухмерных массивов
 template<typename T>T** Allocate(const int rows, const int cols);
 void Clear(int** arr, const int rows);
@@ -14,7 +15,8 @@ template<typename T>void Clear(T** arr, const int rows);
 template<typename T>T** push_row_back(T** arr, int& rows, const int cols);
 template<typename T>T** pop_row_back(T** arr, int& rows, const int cols);
 template<typename T>void push_col_back(T** arr, const int rows, int& cols);
-
+template<typename T>T** push_row_front(T** arr[], int& rows, const int cols);
+template<typename T>T** erase_row(T** arr[], int& rows, const int cols);
 
 void FillRand(int arr[], const int n, int minRand, int maxRand);
 void FillRand(double arr[], const int n, int minRand, int maxRand);
@@ -22,6 +24,7 @@ void FillRand(char arr[], const int n);
 
 void FillRand(int** arr, const int rows, const int cols);
 void FillRand(double** arr, const int rows, const int cols);
+void FillRand(char** arr, const int rows, const int cols);
 
 template<typename T>void Print(T arr[], const int n);
 template<typename T>void Print(T** arr, const int rows, const int cols);
@@ -89,7 +92,7 @@ void main()
 	int cols;
 	cout << "Введите количество строк: "; cin >> rows;
 	cout << "Введите количество элементов строки: "; cin >> cols;
-	int** arr = Allocate<int>(rows, cols);
+	DataType** arr = Allocate<DataType>(rows, cols);
 	FillRand(arr, rows, cols);
 	Print(arr, rows, cols);
 
@@ -97,11 +100,14 @@ void main()
 	FillRand(arr[rows - 1], cols, 100, 1000);
 	Print(arr, rows, cols);
 
+	arr = push_row_front(arr, rows, cols);
+	Print(arr, rows, cols);
+
 	arr = pop_row_back(arr, rows, cols);
 	Print(arr, rows, cols);
 	push_col_back(arr, rows, cols);
 	Print(arr, rows, cols);
-
+	
 	Clear(arr, rows);
 
 	//Test commit
@@ -152,6 +158,12 @@ template<typename T>T** push_row_back(T** arr, int& rows, const int cols)
 	return push_back(arr, rows, new T[cols]{});
 }
 
+template<typename T>T** push_row_front(T** arr[], int& rows, const int cols)
+{
+	return push_front(arr, rows, new T[cols]{});
+}
+
+
 
 void FillRand(int arr[], const int n, int minRand, int maxRand)
 {
@@ -162,6 +174,31 @@ void FillRand(int arr[], const int n, int minRand, int maxRand)
 		*(arr + i) = rand() % (maxRand - minRand) + minRand;
 	}
 }
+
+template<typename T>
+T** pop_row_back(T** arr, int& rows, const int cols)
+{
+	delete[] arr[rows - 1];
+	return pop_back(arr, rows);
+}
+
+
+
+template<typename T>
+void push_col_back(T** arr, const int rows, int& cols)
+{
+
+	for (int i = 0; i < rows; i++)
+	{
+		arr[i] = push_back(arr[i], cols, T());
+		cols--;
+	}
+
+	cols++;
+
+}
+
+
 void FillRand(double arr[], const int n, int minRand, int maxRand)
 {
 	minRand *= 100;
@@ -198,6 +235,18 @@ void FillRand(int** arr, const int rows, const int cols)
 	}
 }
 void FillRand(double** arr, const int rows, const int cols)
+
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			arr[i][j] = rand() % 100;
+		}
+	}
+
+}
+void FillRand(char** arr, const int rows, const int cols)
 
 {
 	for (int i = 0; i < rows; i++)
@@ -276,26 +325,6 @@ T* pop_back(T arr[], int& n)
 	delete[] arr;
 	return buffer;
 }
-template<typename T>
-T** pop_row_back(T** arr, int& rows, const int cols)
-{
-	delete[] arr[rows - 1];
-	return pop_back(arr,rows);
-}
-template<typename T>
-void push_col_back(T** arr, const int rows, int& cols)
-{
-
-	for (int i = 0; i < rows; i++)
-	{
-		arr[i] = push_back(arr[i], cols, T());
-		cols--;
-	}
-
-	cols++;
-
-}
-
 template<typename T>
 T* pop_front(T arr[], int& n)	//удаляет нулевой элемент массива
 {
