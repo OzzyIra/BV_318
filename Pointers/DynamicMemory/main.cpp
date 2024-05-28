@@ -34,8 +34,8 @@ int* erase(int arr[], int& n, int pos);
 //push
 //pop
 
-#define DYNAMIC_MEMORY_1
-//#define DYNAMIC_MEMORY_2
+//#define DYNAMIC_MEMORY_1
+#define DYNAMIC_MEMORY_2
 
 void main()
 {
@@ -131,20 +131,6 @@ void Clear(int** arr, const int rows)
 
 }
 
-int** push_row_back(int** arr,  int& rows, const int cols)
-{
-	int** buffer = new int* [rows+1];
-
-	for (int i = 0; i < rows; i++)buffer[i] = arr[i];
-
-	delete[] arr;
-
-	buffer[rows] = new int[cols] {};
-
-	rows++;
-	return buffer;
-}
-
 
 void FillRand(int arr[], const int n, int minRand, int maxRand)
 {
@@ -213,6 +199,11 @@ int* push_back(int arr[], int& n, int value)
 	//Print(arr, n);
 	return arr;
 }
+int** push_row_back(int** arr,  int& rows, const int cols)
+{
+	return push_back(arr[], rows, new T[cols]{});
+}
+
 int* push_front(int arr[], int& n, int value)
 {
 	int* buffer = new int[n + 1];
@@ -288,14 +279,9 @@ int* erase(int arr[], int& n, int pos)
 {
 	if (pos >= n)return arr;
 	int* buffer = new int[n - 1];
-	//for (int i = 0; i < pos; i++)buffer[i] = arr[i];
-	//for (int i = pos; i < n - 1; i++) buffer[i] = arr[i + 1];
-	for (int i = 0; i < n - 1; i++)
+	for (int i = 0; i < n - 1; i++) 
 		buffer[i] = arr[i < pos ? i : i + 1];
-	{
-		//if (i < pos)buffer[i] = arr[i];
-		//else buffer[i] = arr[i + 1];
-	}
+	
 	delete[] arr;
 	return buffer;
 	

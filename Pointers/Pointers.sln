@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1082
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34729.46
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pointers", "Pointers\Pointers.vcxproj", "{48A744DB-A97C-4A1B-8D3E-3313DD91D56B}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynamicMemory", "DynamicMemory\DynamicMemory.vcxproj", "{679D7FDA-36FF-452B-B138-F233A24857FF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Split", "Split\Split.vcxproj", "{274CB774-2717-4BF8-9632-F9CE8B550F00}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynamicMemory2", "DynamicMemory2\DynamicMemory2.vcxproj", "{70634FC0-1844-4C17-BD82-A25CE5AAD50B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,14 @@ Global
 		{274CB774-2717-4BF8-9632-F9CE8B550F00}.Release|x64.Build.0 = Release|x64
 		{274CB774-2717-4BF8-9632-F9CE8B550F00}.Release|x86.ActiveCfg = Release|Win32
 		{274CB774-2717-4BF8-9632-F9CE8B550F00}.Release|x86.Build.0 = Release|Win32
+		{70634FC0-1844-4C17-BD82-A25CE5AAD50B}.Debug|x64.ActiveCfg = Debug|x64
+		{70634FC0-1844-4C17-BD82-A25CE5AAD50B}.Debug|x64.Build.0 = Debug|x64
+		{70634FC0-1844-4C17-BD82-A25CE5AAD50B}.Debug|x86.ActiveCfg = Debug|Win32
+		{70634FC0-1844-4C17-BD82-A25CE5AAD50B}.Debug|x86.Build.0 = Debug|Win32
+		{70634FC0-1844-4C17-BD82-A25CE5AAD50B}.Release|x64.ActiveCfg = Release|x64
+		{70634FC0-1844-4C17-BD82-A25CE5AAD50B}.Release|x64.Build.0 = Release|x64
+		{70634FC0-1844-4C17-BD82-A25CE5AAD50B}.Release|x86.ActiveCfg = Release|Win32
+		{70634FC0-1844-4C17-BD82-A25CE5AAD50B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
